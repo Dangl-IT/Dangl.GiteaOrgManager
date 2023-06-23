@@ -114,7 +114,8 @@ namespace Dangl.GiteaOrgManager
                 Login_name = username,
                 Password = password,
                 Send_notify = false,
-                Username = username
+                Username = username,
+                Must_change_password = false
             });
 
             var organizationClient = GetOrganizationClient();
@@ -144,6 +145,10 @@ namespace Dangl.GiteaOrgManager
                         Remote_username = pushUserName,
                         Remote_password = pushUserPassword,
                     });
+
+                // We want to initiate a push right away to ensure the new org
+                // has up to date code
+                await repositoryClient.RepoPushMirrorSyncAsync(sourceOrg.Name, sourceRepo.Name);
             }
         }
 
