@@ -1,15 +1,14 @@
-﻿using CommandLine.Text;
-using CommandLine;
+﻿using CommandLine;
+using CommandLine.Text;
 
 namespace Dangl.GiteaOrgManager
 {
     internal static class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
-
-            HeadingInfo.Default.WriteMessage("Visit https://www.dangl-it.com to find out more about this tool");
-            HeadingInfo.Default.WriteMessage("This tool is available on GitHub: https://github.com/Dangl-IT/Dangl.GiteaOrgManager");
+            HeadingInfo.Default.WriteMessage("Visit https://www.dangl-it.com to find out more about this exporter");
+            HeadingInfo.Default.WriteMessage("This generator is available on GitHub: https://github.com/GeorgDangl/Dangl.SevDeskExport");
             HeadingInfo.Default.WriteMessage($"Version {VersionInfo.Version}");
             await Parser.Default.ParseArguments<OrgCreationOptions>(args)
                 .MapResult(async options =>
