@@ -41,7 +41,7 @@
       "serializeTypeInformation": false,
       "queryNullValue": "",
       "className": "{controller}Client",
-      "operationGenerationMode": "MultipleClientsFromOperationId",
+      "operationGenerationMode": "MultipleClientsFromFirstTagAndOperationId",
       "additionalNamespaceUsages": [],
       "additionalContractNamespaceUsages": [],
       "generateOptionalParameters": false,
