@@ -104,6 +104,14 @@ namespace Dangl.GiteaOrgManager
                 .EnableNoRestore());
         });
 
+    Target GenerateSwaggerClient => _ => _
+        .Executes(() =>
+        {
+            var nSwagConfigPath = SourceDirectory / "Dangl.GiteaOrgManager" / "nswag.json";
+            var nSwagToolPath = NuGetToolPathResolver.GetPackageExecutable("NSwag.MSBuild", "tools/Net70/dotnet-nswag.dll");
+            DotNet($"{nSwagToolPath} run /Input:\"{nSwagConfigPath}\"", SourceDirectory / "Dangl.GiteaOrgManager");
+        });
+
     Target Publish => _ => _
         .DependsOn(Clean)
         .DependsOn(GenerateVersionService)
