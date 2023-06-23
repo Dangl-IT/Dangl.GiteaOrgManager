@@ -3,8 +3,8 @@ assembly-file-versioning-scheme: MajorMinorPatch
 mode: Mainline
 
 branches:
-  master:
-    regex: (origin/)?master
+  main:
+    regex: (origin/)?main
   develop:
     increment: Patch
     tag: beta
