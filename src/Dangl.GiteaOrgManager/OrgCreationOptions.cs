@@ -16,7 +16,7 @@ namespace Dangl.GiteaOrgManager
         [Option('o', "org", Required = true, HelpText = "The name of the target organization to mirror to")]
         public string TargetOrgName { get; set; }
 
-        [Option('e', "exclude", Required = false, HelpText = "A list of repositories to exclude from the mirroring")]
-        public string[] ExcludedRepos { get; set; }
+        [Option('e', "exclude", Required = false, HelpText = "A list of repositories to exclude from the mirroring, comma separated")]
+        public string ExcludedRepos { get; set; }
     }
 }

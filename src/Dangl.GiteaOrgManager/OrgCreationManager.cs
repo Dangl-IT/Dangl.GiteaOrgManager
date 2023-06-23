@@ -52,9 +52,12 @@ namespace Dangl.GiteaOrgManager
                 }
             }
 
-            repos = repos.Where(r => _options.ExcludedRepos == null
-                            || !_options.ExcludedRepos.Any(rr => rr == r.Name))
-                        .ToList();
+            if (!string.IsNullOrWhiteSpace(_options.ExcludedRepos))
+            {
+                var splitExludes = _options.ExcludedRepos.Split(',').ToList();
+                repos = repos.Where(r => !splitExludes.Any(rr => rr == r.Name))
+                            .ToList();
+            }
 
             return (sourceOrganization, repos);
         }
