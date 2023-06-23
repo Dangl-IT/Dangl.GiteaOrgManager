@@ -26928,7 +26928,7 @@ namespace Dangl.GiteaOrgManager.Client
                         ProcessResponse(client_, response_);
 
                         var status_ = (int)response_.StatusCode;
-                        if (status_ == 201)
+                        if (status_ == 201 || status_ == 200) // See: https://github.com/go-gitea/gitea/pull/25476
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<PushMirror>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
