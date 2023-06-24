@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
-    <PackageReference Include="docfx.console" Version="2.59.2">
+    <PackageReference Include="docfx.console" Version="2.59.4">
       <ExcludeAssets>build</ExcludeAssets>
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
