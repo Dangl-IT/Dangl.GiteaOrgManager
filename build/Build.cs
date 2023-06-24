@@ -151,7 +151,7 @@ namespace Dangl.GiteaOrgManager
              };
 
     Target PublishGitHubRelease => _ => _
-         .OnlyWhenDynamic(() => GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
+         .OnlyWhenDynamic(() => GitVersion.BranchName.Equals("main") || GitVersion.BranchName.Equals("origin/main"))
          .Executes(async () =>
          {
              Assert.NotNull(GitHubActions.Instance?.Token);
