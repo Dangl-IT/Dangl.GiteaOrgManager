@@ -86,16 +86,32 @@ namespace Dangl.GiteaOrgManager
             var targetRepositories = new List<Repository>();
             foreach (var sourceRepository in sourceRepositories)
             {
-                var targetRepository = await orgClient.CreateOrgRepoAsync(targetOrganization.Name, new CreateRepoOption
+                var retries = 0;
+                while (retries < 5)
                 {
-                    Auto_init = false,
-                    Description = "This is only a code mirror intended for read-only operations. No upstream changes are propagated.",
-                    Name = sourceRepository.Name,
-                    Private = true,
-                    Trust_model = CreateRepoOptionTrust_model.Default,
-                });
+                    try
+                    {
+                        var targetRepository = await orgClient.CreateOrgRepoAsync(targetOrganization.Name, new CreateRepoOption
+                        {
+                            Auto_init = false,
+                            Description = "This is only a code mirror intended for read-only operations. No upstream changes are propagated.",
+                            Name = sourceRepository.Name,
+                            Private = true,
+                            Trust_model = CreateRepoOptionTrust_model.Default,
+                        });
 
-                targetRepositories.Add(targetRepository);
+                        targetRepositories.Add(targetRepository);
+                        break;
+                    }
+                    catch
+                    {
+                        retries++;
+                        if (retries >= 5)
+                        {
+                            throw;
+                        }
+                    }
+                }
             }
 
             return targetRepositories;
@@ -136,15 +152,31 @@ namespace Dangl.GiteaOrgManager
             {
                 var targetRepo = targetRepos.Single(tr => tr.Name == sourceRepo.Name);
 
-                var pushMirror = await repositoryClient.RepoAddPushMirrorAsync(sourceOrg.Name,
-                    sourceRepo.Name, new CreatePushMirrorOption
+                var retries = 0;
+                while (retries < 5)
+                {
+                    try
                     {
-                        Interval = "24h0m0s",
-                        Sync_on_commit = true,
-                        Remote_address = targetRepo.Clone_url,
-                        Remote_username = pushUserName,
-                        Remote_password = pushUserPassword,
-                    });
+                        var pushMirror = await repositoryClient.RepoAddPushMirrorAsync(sourceOrg.Name,
+                            sourceRepo.Name, new CreatePushMirrorOption
+                            {
+                                Interval = "24h0m0s",
+                                Sync_on_commit = true,
+                                Remote_address = targetRepo.Clone_url,
+                                Remote_username = pushUserName,
+                                Remote_password = pushUserPassword,
+                            });
+                        break;
+                    }
+                    catch
+                    {
+                        retries++;
+                        if (retries >= 5)
+                        {
+                            throw;
+                        }
+                    }
+                }
 
                 // We want to initiate a push right away to ensure the new org
                 // has up to date code
