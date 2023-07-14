@@ -178,9 +178,16 @@ namespace Dangl.GiteaOrgManager
                     }
                 }
 
-                // We want to initiate a push right away to ensure the new org
-                // has up to date code
-                await repositoryClient.RepoPushMirrorSyncAsync(sourceOrg.Name, sourceRepo.Name);
+                try
+                {
+                    // We want to initiate a push right away to ensure the new org
+                    // has up to date code
+                    await repositoryClient.RepoPushMirrorSyncAsync(sourceOrg.Name, sourceRepo.Name);
+                }
+                catch
+                {
+                    // But when it doesn't work, it'll be automatically started in a day
+                }
             }
         }
 
