@@ -14,6 +14,8 @@ The following CLI options are supported:
   -o, --org        Required. The name of the target organization to mirror to
 
   -e, --exclude    A list of repositories to exclude from the mirroring, comma separated
+  
+  -m, --skip-mirror    If enabled, then no automatic Gitea mirroring will be setup
 
   --help           Display this help screen.
 

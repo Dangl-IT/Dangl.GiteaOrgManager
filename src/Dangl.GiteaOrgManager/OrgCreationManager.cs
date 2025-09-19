@@ -24,6 +24,12 @@ namespace Dangl.GiteaOrgManager
             var targetRepositories = await CreateRepositoriesInTargetOrganizationAsync(targetOrganization,
                 sourceData.repos);
 
+            if (_options.SkipMirrorSetup)
+            {
+                Console.WriteLine("Skipping mirror setup as requested.");
+                return;
+            }
+
             var pushUserCredentials = await CreateUserForPushAccessInMirrorRepositoriesAsync(targetOrganization);
 
             await ConfigurePushTargetsFromSourceToTargetRepositoriesAsync(sourceData.org,

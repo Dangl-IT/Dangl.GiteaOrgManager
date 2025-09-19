@@ -18,5 +18,8 @@ namespace Dangl.GiteaOrgManager
 
         [Option('e', "exclude", Required = false, HelpText = "A list of repositories to exclude from the mirroring, comma separated")]
         public string ExcludedRepos { get; set; }
+
+        [Option('m', "skip-mirror", Required = false, HelpText = "If enabled, then no automatic Gitea mirroring will be setup")]
+        public bool SkipMirrorSetup { get; set; }
     }
 }
