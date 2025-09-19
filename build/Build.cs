@@ -11,7 +11,6 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.IO.TextTasks;
@@ -131,13 +130,13 @@ namespace Dangl.GiteaOrgManager
                     .SetFileVersion(GitVersion.AssemblySemFileVer)
                     .SetAssemblyVersion(GitVersion.AssemblySemVer)
                     .SetInformationalVersion(GitVersion.InformationalVersion)
-                    .When(publishTarget[1] == "ubuntu-x64", c => c.SetProcessArgumentConfigurator(a => a
-                       .Add("/p:PublishSingleFile=true")
-                       .Add("/p:DebugType=None")))
-                    .When(publishTarget[1] != "ubuntu-x64", c => c.SetProcessArgumentConfigurator(a => a
-                       .Add("/p:PublishSingleFile=true")
-                       .Add("/p:DebugType=None")
-                       .Add("/p:PublishReadyToRun=true")))
+                    .When(s => publishTarget[1] == "ubuntu-x64", c => c.AddProcessAdditionalArguments(
+                        "/p:PublishSingleFile=true",
+                        "/p:DebugType=None"))
+                    .When(s => publishTarget[1] != "ubuntu-x64", c => c.AddProcessAdditionalArguments(
+                       "/p:PublishSingleFile=true",
+                       "/p:DebugType=None",
+                       "/p:PublishReadyToRun=true"))
                     );
                 ZipFile.CreateFromDirectory(tempPublishPath, zipPath);
             }
